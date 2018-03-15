@@ -1,9 +1,16 @@
 # Lambda Handler for checking status URLS
 
-This lambda should be deployed once per account, and then triggered by multiple CloudWatch Event Rules.
-Each Rule will pass in the config of the service to check.
 
-i.e. to check 20 hosts we have 1 x Lambda + 20 x Rules
+This lambda should be deployed once per AWS account & 1 Cloudwatch rule per URL triggered by multiple CloudWatch Event Rules.
+
+i.e. to check 20 hosts we have 1 x Lambda + 20 x Healthcheck URL Rules in Cloudwatch
+
+1. Upload the Lambda .zip file to Lambda.
+2. Configure SNS topics
+3. Using CloudWatch Events - configure 1 healthcheck per URL with a cron of 5 minutes and JSON code.
+
+Thats it. 
+
 
 ## Packaging
 
@@ -36,9 +43,8 @@ The Cloudwatch Event Rule should be configured with static JSON as the input to 
 
 ```
 {
-  "url" : "https://ENTERURL.COM/status/", # Modify URL
-  "ipStatusAuthCode" : "XXXXX", # If needed otherwise comment out
-  "subject" : "ALERT SUBJECT" # Modify Subject
+  "url" : "https://ENTERURL.COM/status/", 
+  "subject" : "ALERT SUBJECT" 
 }
 
 ```
